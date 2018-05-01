@@ -28,6 +28,8 @@ class LoginController extends Controller
      */
     protected function attemptLogin(Request $request)
     {
+        // $token = $this->guard()->claims(['foo' => 'bar'])->attempt($this->credentials($request));
+        // 如果User的Model設定claims就不用在token自定義內容
         $token = $this->guard()->attempt($this->credentials($request));
 
         if ($token) {

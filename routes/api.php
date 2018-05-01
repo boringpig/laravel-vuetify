@@ -17,6 +17,8 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('logout', 'Auth\LoginController@logout');
 
     Route::get('/user', function (Request $request) {
+        // return $request->user()->getJWTCustomClaims();
+        // return auth()->payload();
         return $request->user();
     });
 

@@ -31,7 +31,15 @@ class RegisterController extends Controller
      */
     protected function registered(Request $request, $user)
     {
-        return $user;
+        $token = $this->guard()->login($user);
+        $expiration = $this->guard()->getPayload()->get('exp');
+
+        return [
+            'token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => $expiration - time(),
+            'user' => $user
+        ];
     }
 
     /**

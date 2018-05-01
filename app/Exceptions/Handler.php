@@ -48,6 +48,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if($exception instanceof \Illuminate\Auth\AuthenticationException) {
+            return response()->json([
+                'RetCode' => 0,
+                'RetMsg'  => '無效的token'
+            ], 401);
+        }
+
+        if($exception instanceof \Illuminate\Validation\ValidationException) {
+            return response()->json([
+                'RetCode' => 0,
+                'RetMsg' => collect($exception->errors())->collapse()->toArray(),
+            ], 422);
+        }
+
         return parent::render($request, $exception);
     }
 }
